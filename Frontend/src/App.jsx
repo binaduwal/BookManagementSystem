@@ -1,21 +1,18 @@
-import {BrowserRouter, Routes, Route, RouterProvider} from "react-router-dom"
+import React from 'react'
+import Home from './pages/home/Home'
+import { BrowserRouter, Routes ,Route} from 'react-router-dom'
+import Card from './components/card'
+import SingleBook from './pages/singleBook/SingleBook'
 
-import Home from "./Home"
-import router from "./Routes"
-import { useState } from "react"
-
-function App() {
-const [count,setcount]= useState(0)
-const [name,setName]=useState("Bina")
-
-
+const App = () => {
   return (
     <>
-    <h1>{count}</h1>
-    <h2>{name}</h2>
-    <button onClick={()=>setcount(count +1)}>+</button>
-    <button onClick={()=>setName("Beena")}>Change Name</button>
-  <RouterProvider router={router}/>
+    <BrowserRouter>
+    <Routes>
+    <Route path="/" element={<Home />} />  
+    <Route path="/book/:id" element={<SingleBook/>}/>
+      </Routes>
+    </BrowserRouter>
     </>
   )
 }

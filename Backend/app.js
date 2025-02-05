@@ -3,12 +3,17 @@ const app=express();
 const ConnectToDatabase=require('./Database/db');   
 const Book = require('./model/bookModel');
 const {multer,storage}= require("./middleware/multerConfig");
-
 const upload=multer({storage:storage})
-
+const cors=require('cors')
 app.use(express.json())
 
-ConnectToDatabase();
+app.use(cors({
+    origin:'*'
+}))
+
+app.use('/storage', express.static('storage'));
+
+ConnectToDatabase()
 
 
 app.get("/", (req,res) => {
@@ -23,8 +28,8 @@ app.post("/book", upload.single('bookimage'),async(req,res)=>{
     const {bookName,
         bookPrice,
         isbnNumber,
-        authorName,
-        bookimage}=req.body
+        authorName
+        }=req.body
 
     await Book.create({
         bookName,bookPrice,isbnNumber,authorName,bookimage:req.file.filename
@@ -52,7 +57,7 @@ app.get("/book/:id",async (req,res)=>
         if(!books)
             {
         res.json({
-            "message":"Fetched single data"
+            "message":"No Book Found"
         })
         }
         else
@@ -69,12 +74,6 @@ app.get("/book/:id",async (req,res)=>
             "message":"Something went wrong"
         })
     }
-    const id=req.params.id
-    const books=await Book.findById(id)
-    res.json({
-        "message":"Fetched single data",
-        data:books
-    })
 })
 
 //delete operation
@@ -103,8 +102,8 @@ app.patch("/book/:id",async (req,res)=>{
 
 
 //start server
-app.listen(3001, ()=>{
-    console.log("Listening to port",3001); //to check if port 3001 is listening or not
+app.listen(3000, ()=>{
+    console.log("Listening to port",3000); //to check if port 3001 is listening or not
 });
 
 
