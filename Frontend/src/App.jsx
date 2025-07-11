@@ -1,17 +1,12 @@
 import React from 'react'
-import Home from './pages/home/Home'
 import { BrowserRouter, Routes ,Route} from 'react-router-dom'
-import Card from './components/card'
-import SingleBook from './pages/singleBook/SingleBook'
+import Signup from '../Pages/Signup'
 
 const App = () => {
   return (
     <>
     <BrowserRouter>
-    <Routes>
-    <Route path="/" element={<Home />} />  
-    <Route path="/book/:id" element={<SingleBook/>}/>
-      </Routes>
+    <Signup/>
     </BrowserRouter>
     </>
   )
